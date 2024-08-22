@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.cars.DTO.CreateVeihicleDTO;
 import com.example.cars.Models.Vehicle;
 import com.example.cars.Services.VehicleService;
 
@@ -32,8 +35,8 @@ class VehicleController {
     }
 
     @PostMapping
-    public Vehicle create(Vehicle vehicle) {
-        return service.create(vehicle);
+    public Vehicle create(@RequestBody CreateVeihicleDTO data) {
+        return service.create(data);
     }
 
     @PutMapping("/{id}")

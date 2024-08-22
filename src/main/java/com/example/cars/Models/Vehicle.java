@@ -16,7 +16,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
 @NoArgsConstructor
 @Entity(name = "vehicle")
 public class Vehicle {
@@ -42,5 +41,13 @@ public class Vehicle {
     @JoinTable(name = "vehicle_optional", joinColumns = { @JoinColumn(name = "vehicle_id") }, inverseJoinColumns = {
             @JoinColumn(name = "optional_is") })
     private List<Optional> optionals;
+
+    public Vehicle(Integer kilometers, String color, String description, Integer year, Model model) {
+        this.kilometers = kilometers;
+        this.color = color;
+        this.description = description;
+        this.year = year;
+        this.model = model;
+    }
 
 }
