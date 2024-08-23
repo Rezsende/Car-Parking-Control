@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,4 +48,19 @@ public class ManuFacturerController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(manufacO.get());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> putManufacture(@PathVariable(value = "id") Long id,
+            @RequestBody @Valid ManuFactureCreateDTO manufactureDto) {
+        Optional<Manufacturer> manufacO = manuFacturerRepository.findById(id);
+        if (manufacO.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Manufacture não encontrado");
+
+        }
+
+        var manuModel = manufacO.get();
+        BeanUtils.copyProperties(manufactureDto, manuModel);
+        return ResponseEntity.status(HttpStatus.OK).body(manuFacturerRepository.save(manuModel));
+    }
+
 }
