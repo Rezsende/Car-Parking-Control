@@ -2,7 +2,10 @@ package com.example.cars.Services;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.cars.DTO.CreateVeihicleDTO;
 import com.example.cars.Models.Vehicle;
@@ -23,13 +26,14 @@ public class VehicleService {
     }
 
     public Vehicle getById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        return repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
     }
 
     public Vehicle create(CreateVeihicleDTO data) {
 
         var model = modelrepository.findById(data.getModelId())
-                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
         var vehicle = new Vehicle(
                 data.getKilometers(),
                 data.getColor(),
