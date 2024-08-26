@@ -18,13 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cars.DTO.ManuFactureCreateDTO;
 import com.example.cars.Models.Manufacturer;
+import com.example.cars.Models.Vehicle;
 import com.example.cars.Repositories.ManuFacturerRepository;
+import com.example.cars.Services.ManuFactureServices;
+import com.example.cars.Services.VehicleService;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/manufacture")
-public class ManuFacturerController {
+@AllArgsConstructor
+class ManuFacturerController {
+    private final ManuFactureServices manuFactureServices;
+
     @Autowired
     ManuFacturerRepository manuFacturerRepository;
 
@@ -37,7 +44,7 @@ public class ManuFacturerController {
 
     @GetMapping
     public ResponseEntity<List<Manufacturer>> getManufactorer() {
-        return ResponseEntity.status(HttpStatus.OK).body(manuFacturerRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(manuFactureServices.listManufactureService());
     }
 
     @GetMapping("/{id}")
