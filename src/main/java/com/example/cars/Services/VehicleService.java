@@ -3,7 +3,7 @@ package com.example.cars.Services;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class VehicleService {
+
     private final VehicleRepository repository;
     private final ModelRepository modelrepository;
 
