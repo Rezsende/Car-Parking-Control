@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.cars.DTO.ManuFactureCreateDTO;
 import com.example.cars.Models.Manufacturer;
@@ -48,13 +49,13 @@ class ManuFacturerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneManufacture(@PathVariable(value = "id") Long id) {
-        Optional<Manufacturer> manufacO = manuFacturerRepository.findById(id);
-        if (manufacO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Manufacture não encontrado");
-
+    public ResponseEntity<Object> getManufacturerById(@PathVariable Long id) {
+        try {
+            Manufacturer manufacturer = manuFactureServices.getById(id);
+            return ResponseEntity.ok(manufacturer);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getReason());
         }
-        return ResponseEntity.status(HttpStatus.OK).body(manufacO.get());
     }
 
     @PutMapping("/{id}")
